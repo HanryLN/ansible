@@ -17,6 +17,21 @@
       update_cache: yes
     when: ansible_distribution == "Ubuntu"
 
+  - name: create user
+    tags: always
+    ansible.builtin.user:
+      name: simone
+      group: root
+
+  - name: add sudoers files for simone
+    tags: always
+    ansible.builtin.copy:
+      src: sudoer_simone
+      dest: /etc/sudoers.d/simone
+      owner: root
+      group: root
+      mode: 0440
+
 - hosts: web_servers 
   become: true
   tasks:
